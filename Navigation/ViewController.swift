@@ -1,9 +1,4 @@
-//
-//  ViewController.swift
-//  Navigation
-//
-//  Created by Apple Mac Air on 22.08.2022.
-//
+
 
 import UIKit
 
