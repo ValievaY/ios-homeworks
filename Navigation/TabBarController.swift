@@ -22,7 +22,7 @@ class TabBarController: UITabBarController {
         profileNavigationControoller.tabBarItem = UITabBarItem (title: "Profile", image: UIImage(systemName: "person"), tag: 1)
         
         UITabBar.appearance().tintColor = UIColor (red: 0/105.0, green: 0/105.0, blue: 236/105.0, alpha: 1.0)
-        UITabBar.appearance().backgroundColor = .lightGray
+        UITabBar.appearance().backgroundColor = .systemGray6
         
     }
 }
