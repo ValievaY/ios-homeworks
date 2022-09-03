@@ -55,7 +55,6 @@ class ProfileHeaderView: UIView {
     
     var statusTextField: UITextField = {
         let text = UITextField()
-        text.frame = CGRect (x: 125, y: 180, width: 200, height: 40)
         text.backgroundColor = .white
         text.textAlignment = .center
         text.layer.borderWidth = 1
@@ -64,6 +63,7 @@ class ProfileHeaderView: UIView {
         text.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         text.textColor = .black
         text.placeholder = "write something"
+        text.translatesAutoresizingMaskIntoConstraints = false
         return text
     }()
     
@@ -89,6 +89,7 @@ class ProfileHeaderView: UIView {
         addSubview(fullNameLabel)
         addSubview(statusLabel)
         addSubview(setStatusButton)
+        addSubview(statusTextField)
     }
     
     func setupConstraints() {
@@ -106,8 +107,14 @@ class ProfileHeaderView: UIView {
             setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 50),
             
-            statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -34),
+            statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -50),
             statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 25),
+            
+            statusTextField.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -5),
+            statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 5),
+            statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
+            statusTextField.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 25),
+            statusTextField.heightAnchor.constraint(equalToConstant: 40)
         ])
     }
     
@@ -120,9 +127,8 @@ class ProfileHeaderView: UIView {
      }
     
     @objc func buttonPressed() {
-        print(statusLabel.text!)
-        addSubview(statusTextField)
-        statusLabel.text = statusText
+        print(statusLabel.text ?? "No text")
+        statusLabel.text = statusTextField.text
     }
     
     @objc func statusTextChanged(_ textField: UITextField) {

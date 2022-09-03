@@ -5,7 +5,7 @@ import UIKit
 class ProfileViewController: UIViewController {
     
     var profileHeaderView = ProfileHeaderView().self
-    
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .lightGray
