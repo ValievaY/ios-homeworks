@@ -12,7 +12,7 @@ class ProfileViewController: UIViewController {
         view.addSubview(profileHeaderView)
     }
     
-    override func viewWillLayoutSubviews() {
+  override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         profileHeaderView.frame = CGRect(origin: .zero, size: view.bounds.size)
     }
