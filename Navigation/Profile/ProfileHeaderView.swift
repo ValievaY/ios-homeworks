@@ -67,6 +67,15 @@ class ProfileHeaderView: UIView {
         return text
     }()
     
+    var changeTitle: UIButton = {
+        let titleButton = UIButton()
+        titleButton.setTitle("Profile", for: .normal)
+        titleButton.setTitleColor(UIColor.black, for: .normal)
+        titleButton.backgroundColor = .lightGray
+        titleButton.translatesAutoresizingMaskIntoConstraints = false
+        return titleButton
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         addImage()
@@ -90,16 +99,17 @@ class ProfileHeaderView: UIView {
         addSubview(statusLabel)
         addSubview(setStatusButton)
         addSubview(statusTextField)
+        addSubview(changeTitle)
     }
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 108),
+            avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
             avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             avatarImageView.heightAnchor.constraint(equalToConstant: 100),
             avatarImageView.widthAnchor.constraint(equalToConstant: 100),
             
-            fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 119),
+            fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
             fullNameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
             setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
@@ -114,7 +124,11 @@ class ProfileHeaderView: UIView {
             statusTextField.topAnchor.constraint(equalTo: statusLabel.bottomAnchor, constant: 5),
             statusTextField.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             statusTextField.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 25),
-            statusTextField.heightAnchor.constraint(equalToConstant: 40)
+            statusTextField.heightAnchor.constraint(equalToConstant: 40),
+            
+            changeTitle.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
+            changeTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
+            changeTitle.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor)
         ])
     }
     
@@ -132,6 +146,6 @@ class ProfileHeaderView: UIView {
     }
     
     @objc func statusTextChanged(_ textField: UITextField) {
-        statusText = statusTextField.text!
+        statusText = statusTextField.text ?? "No text"
     }
 }
