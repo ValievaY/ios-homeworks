@@ -13,6 +13,7 @@ class ProfileHeaderView: UIView {
     
     let avatarImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.image = UIImage(named: "fox.jpg")
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 50
         imageView.layer.borderWidth = 3
@@ -78,7 +79,6 @@ class ProfileHeaderView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        addImage()
         addView()
         setupConstraints()
         addTargets()
@@ -88,10 +88,6 @@ class ProfileHeaderView: UIView {
     required init?(coder: NSCoder) {
             super.init(coder: coder)
         }
-    
-    func addImage(){
-        avatarImageView.image = UIImage(named: "fox.jpg")
-    }
     
     func addView() {
         addSubview(avatarImageView)
