@@ -100,12 +100,13 @@ class ProfileHeaderView: UIView {
     
     func setupConstraints() {
         NSLayoutConstraint.activate([
-            avatarImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: 16),
+
+            avatarImageView.topAnchor.constraint(equalTo: changeTitle.bottomAnchor, constant: 16),
             avatarImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             avatarImageView.heightAnchor.constraint(equalToConstant: 100),
             avatarImageView.widthAnchor.constraint(equalToConstant: 100),
             
-            fullNameLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 27),
+            fullNameLabel.topAnchor.constraint(equalTo: changeTitle.bottomAnchor, constant: 27),
             fullNameLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             
             setStatusButton.topAnchor.constraint(equalTo: avatarImageView.bottomAnchor, constant: 16),
@@ -124,7 +125,7 @@ class ProfileHeaderView: UIView {
             
             changeTitle.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 0),
             changeTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
-            changeTitle.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor)
+            changeTitle.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 30),
         ])
     }
     

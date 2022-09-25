@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		554D61A128BB53BF0006D0BE /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554D61A028BB53BF0006D0BE /* ProfileHeaderView.swift */; };
+		555BC6CF28D9A4040037CA63 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555BC6CE28D9A4040037CA63 /* LogInViewController.swift */; };
 		55FE6A7C28B38B7700991F30 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FE6A7B28B38B7700991F30 /* AppDelegate.swift */; };
 		55FE6A7E28B38B7700991F30 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FE6A7D28B38B7700991F30 /* SceneDelegate.swift */; };
 		55FE6A8028B38B7700991F30 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55FE6A7F28B38B7700991F30 /* ViewController.swift */; };
@@ -22,6 +23,7 @@
 
 /* Begin PBXFileReference section */
 		554D61A028BB53BF0006D0BE /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
+		555BC6CE28D9A4040037CA63 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		55FE6A7828B38B7700991F30 /* Navigation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Navigation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		55FE6A7B28B38B7700991F30 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		55FE6A7D28B38B7700991F30 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -52,6 +54,7 @@
 			children = (
 				554D61A028BB53BF0006D0BE /* ProfileHeaderView.swift */,
 				55FE6A9328B56B7900991F30 /* ProfileViewController.swift */,
+				555BC6CE28D9A4040037CA63 /* LogInViewController.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 			files = (
 				55FE6A9628B5734D00991F30 /* PostViewController.swift in Sources */,
 				55FE6A8028B38B7700991F30 /* ViewController.swift in Sources */,
+				555BC6CF28D9A4040037CA63 /* LogInViewController.swift in Sources */,
 				55FE6A7C28B38B7700991F30 /* AppDelegate.swift in Sources */,
 				55FE6A9A28B6AFFD00991F30 /* Post.swift in Sources */,
 				55FE6A9C28B7BD0400991F30 /* InfoViewController.swift in Sources */,
