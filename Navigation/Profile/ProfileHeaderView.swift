@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileHeaderView: UIView {
+class ProfileHeaderView: UITableViewHeaderFooterView  {
     
     var statusText: String = ""
     
@@ -77,8 +77,8 @@ class ProfileHeaderView: UIView {
         return titleButton
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         addView()
         setupConstraints()
         addTargets()

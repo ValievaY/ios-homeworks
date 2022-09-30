@@ -4,8 +4,6 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
-    var post = Post(title: "New Post")
-    
     private let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -63,6 +61,6 @@ class FeedViewController: UIViewController {
     
     @objc func toPostView() {
         self.navigationController?.pushViewController(postController, animated: true)
-        postController.titlePost = post.title
+        postController.titlePost = "New Post"
     }
 }
