@@ -67,10 +67,6 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
         headerView.contentView.backgroundColor = .lightGray
         return headerView
     }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        250
-    }
 }
     
   
