@@ -11,7 +11,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
     
     var statusText: String = ""
     
-    let avatarImageView: UIImageView = {
+    private lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "fox.jpg")
         imageView.clipsToBounds = true
@@ -22,7 +22,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
         return imageView
     }()
     
-    let fullNameLabel: UILabel = {
+    private lazy var fullNameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         nameLabel.textColor = .black
@@ -31,7 +31,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
         return nameLabel
     }()
     
-    var statusLabel: UILabel = {
+    private lazy var statusLabel: UILabel = {
         let status = UILabel()
         status.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         status.textColor = .gray
@@ -40,7 +40,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
         return status
     }()
     
-    let setStatusButton: UIButton = {
+    private lazy var setStatusButton: UIButton = {
         let button = UIButton()
         button.setTitle("Show status", for: .normal)
         button.setTitleColor(UIColor.white, for: .normal)
@@ -54,7 +54,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
         return button
     }()
     
-    var statusTextField: UITextField = {
+    private lazy var statusTextField: UITextField = {
         let text = UITextField()
         text.backgroundColor = .white
         text.textAlignment = .center
@@ -68,7 +68,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
         return text
     }()
     
-    var changeTitle: UIButton = {
+    private lazy var changeTitle: UIButton = {
         let titleButton = UIButton()
         titleButton.setTitle("Profile", for: .normal)
         titleButton.setTitleColor(UIColor.black, for: .normal)
