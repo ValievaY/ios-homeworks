@@ -91,12 +91,7 @@ class LogInViewController: UIViewController {
         navigationController?.navigationBar.isHidden = true
         view.backgroundColor = .white
         setupGestures()
-        stackView.addArrangedSubview(logIn)
-        stackView.addArrangedSubview(password)
-        view.addSubview(scrollView)
-        scrollView.addSubview(logoImage)
-        scrollView.addSubview(stackView)
-        scrollView.addSubview(button)
+        addSubview()
         setupConstraints()
     }
     
@@ -115,6 +110,15 @@ class LogInViewController: UIViewController {
                                                selector: #selector(self.didHideKeyboard(_:)),
                                                name: UIResponder.keyboardWillHideNotification,
                                                object: nil)
+    }
+    
+    func addSubview() {
+        stackView.addArrangedSubview(logIn)
+        stackView.addArrangedSubview(password)
+        view.addSubview(scrollView)
+        scrollView.addSubview(logoImage)
+        scrollView.addSubview(stackView)
+        scrollView.addSubview(button)
     }
     
     func setupConstraints() {
@@ -182,7 +186,7 @@ extension LogInViewController: UITextFieldDelegate {
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
         
-        print("\(textField.text)")
+        print("\(textField.text ?? "No text")")
         if textField.tag == 0 {
             logInText = textField.text
         }

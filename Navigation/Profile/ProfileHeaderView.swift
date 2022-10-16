@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ProfileHeaderView: UIView {
+class ProfileHeaderView: UITableViewHeaderFooterView  {
     
     var statusText: String = ""
     
@@ -77,8 +77,8 @@ class ProfileHeaderView: UIView {
         return titleButton
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         addView()
         setupConstraints()
         addTargets()
@@ -113,6 +113,7 @@ class ProfileHeaderView: UIView {
             setStatusButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             setStatusButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16),
             setStatusButton.heightAnchor.constraint(equalToConstant: 50),
+            setStatusButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -16),
             
             statusLabel.bottomAnchor.constraint(equalTo: setStatusButton.topAnchor, constant: -50),
             statusLabel.leadingAnchor.constraint(equalTo: avatarImageView.trailingAnchor, constant: 25),
