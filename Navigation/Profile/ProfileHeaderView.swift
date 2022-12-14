@@ -11,13 +11,14 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
     
     var statusText: String = ""
     
-    private lazy var avatarImageView: UIImageView = {
+     lazy var avatarImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = UIImage(named: "fox.jpg")
         imageView.clipsToBounds = true
         imageView.layer.cornerRadius = 50
         imageView.layer.borderWidth = 3
         imageView.layer.borderColor = UIColor.white.cgColor
+        imageView.isUserInteractionEnabled = true
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
