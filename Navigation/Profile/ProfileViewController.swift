@@ -1,6 +1,7 @@
 
 
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController {
     
@@ -73,13 +74,17 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
         view.addSubview(tableView)
         view.addSubview(backgroundView)
         view.addSubview(xmarkView)
         view.addSubview(avatarView)
         setupConstraints()
         setupXmarkGesture()
+#if DEBUG
+    view.backgroundColor = .lightGray
+#else
+        view.backgroundColor = .systemBlue
+#endif
     }
     
     override func viewWillAppear(_ animated: Bool) {
