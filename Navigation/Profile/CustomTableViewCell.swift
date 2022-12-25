@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import iOSIntPackage
 
 class CustomTableViewCell: UITableViewCell {
     
@@ -90,9 +91,11 @@ class CustomTableViewCell: UITableViewCell {
     func setup(with viewPost: ViewPost) {
         authorText.text = viewPost.author
         descriptionText.text = viewPost.description
-        postImage.image = viewPost.image
         likesLabel.text = "Likes: \(viewPost.likes)"
         viewLabel.text = "Views: \(viewPost.views)"
+        let imageView = viewPost.image
+        let filter = ImageProcessor()
+        filter.processImage(sourceImage: imageView ?? .add, filter: .chrome, completion: { imageView in postImage.image = imageView})
     }
     
     private func setupView() {
