@@ -72,6 +72,8 @@ class ProfileViewController: UIViewController {
     
     private var isAvatarViewIncreased = false
     
+    var user: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(tableView)
@@ -227,7 +229,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(avatarTapGesture(_:)))
                 tapGestureRecognizer.numberOfTapsRequired = 1
                headerView.avatarImageView.addGestureRecognizer(tapGestureRecognizer)
-            
+
+            headerView.avatarImageView.image = user?.avatar
+            headerView.fullNameLabel.text = user?.name
+            headerView.statusLabel.text = user?.status
             headerView.contentView.backgroundColor = .lightGray
             return headerView
         }

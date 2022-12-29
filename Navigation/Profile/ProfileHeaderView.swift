@@ -23,7 +23,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
         return imageView
     }()
     
-    private lazy var fullNameLabel: UILabel = {
+    lazy var fullNameLabel: UILabel = {
         let nameLabel = UILabel()
         nameLabel.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         nameLabel.textColor = .black
@@ -32,7 +32,7 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
         return nameLabel
     }()
     
-    private lazy var statusLabel: UILabel = {
+    lazy var statusLabel: UILabel = {
         let status = UILabel()
         status.font = UIFont.systemFont(ofSize: 14, weight: .regular)
         status.textColor = .gray
