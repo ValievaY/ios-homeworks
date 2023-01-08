@@ -12,10 +12,6 @@ class TestUserService: UserService {
     var user = User.init(login: "0000", name: "User Name", avatar: UIImage(named: "a") ?? .add, status: "something")
     
     func authorization(_ login: String) -> User? {
-        if login == user.login {
-            return user
-        } else {
-            return nil
-        }
+        return login == user.login ? user : nil
     }
 }
