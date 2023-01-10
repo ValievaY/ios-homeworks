@@ -1,6 +1,7 @@
 
 
 import UIKit
+import StorageService
 
 class ProfileViewController: UIViewController {
     
@@ -71,15 +72,21 @@ class ProfileViewController: UIViewController {
     
     private var isAvatarViewIncreased = false
     
+    var user: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .lightGray
         view.addSubview(tableView)
         view.addSubview(backgroundView)
         view.addSubview(xmarkView)
         view.addSubview(avatarView)
         setupConstraints()
         setupXmarkGesture()
+#if DEBUG
+    view.backgroundColor = .lightGray
+#else
+        view.backgroundColor = .systemBlue
+#endif
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -222,7 +229,10 @@ extension ProfileViewController: UITableViewDataSource, UITableViewDelegate {
                 let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(avatarTapGesture(_:)))
                 tapGestureRecognizer.numberOfTapsRequired = 1
                headerView.avatarImageView.addGestureRecognizer(tapGestureRecognizer)
-            
+
+            headerView.avatarImageView.image = user?.avatar
+            headerView.fullNameLabel.text = user?.name
+            headerView.statusLabel.text = user?.status
             headerView.contentView.backgroundColor = .lightGray
             return headerView
         }

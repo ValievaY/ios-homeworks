@@ -85,6 +85,8 @@ class LogInViewController: UIViewController {
     private var passwordText: String?
     
     let profileViewController = ProfileViewController().self
+    
+    private var userService: UserService?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -93,6 +95,11 @@ class LogInViewController: UIViewController {
         setupGestures()
         addSubview()
         setupConstraints()
+#if DEBUG
+        userService = TestUserService()
+#else
+        userService = CurrentUserService()
+#endif
     }
     
     private func setupGestures() {
@@ -146,7 +153,11 @@ class LogInViewController: UIViewController {
     }
     
     @objc func toProfile() {
+        if userService?.authorization(logInText ?? "No text") != nil {
             self.navigationController?.pushViewController(profileViewController, animated: true)
+        } else {
+            print ("wrong login")
+        }
     }
     
     @objc private func didShowKeyboard(_ notification: Notification) {
@@ -181,7 +192,10 @@ extension LogInViewController: UITextFieldDelegate {
     }
     
     func textFieldDidEndEditing(_ textField: UITextField) {
-        
+        if textField.tag == 0 {
+            logInText = textField.text
+            profileViewController.user = userService?.authorization(logInText ?? "No text")
+        }
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
