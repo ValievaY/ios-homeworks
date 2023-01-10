@@ -7,7 +7,7 @@ class ProfileViewController: UIViewController {
     
     lazy var avatarView: UIImageView = {
         let avatarView = UIImageView()
-        avatarView.image = UIImage (named: "fox")
+        avatarView.image = user?.avatar
         avatarView.clipsToBounds = true
         avatarView.isHidden = true
         avatarView.layer.cornerRadius = 50

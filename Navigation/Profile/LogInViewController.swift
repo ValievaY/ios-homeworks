@@ -80,13 +80,19 @@ class LogInViewController: UIViewController {
         return logInButton
     }()
     
+    private let alert = UIAlertController(title: "Неверный логин или пароль", message: "",  preferredStyle: .alert)
+    
     private var logInText: String?
     
     private var passwordText: String?
     
-    let profileViewController = ProfileViewController().self
+    private let profileViewController = ProfileViewController()
     
     private var userService: UserService?
+    
+    var loginDelegate: LoginViewControllerDelegate?
+    
+    private var checkResult: Bool?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,6 +101,7 @@ class LogInViewController: UIViewController {
         setupGestures()
         addSubview()
         setupConstraints()
+        setupAlert()
 #if DEBUG
         userService = TestUserService()
 #else
@@ -152,10 +159,18 @@ class LogInViewController: UIViewController {
         ])
     }
     
+    func setupAlert() {
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: {
+            _ in
+            print("OK")
+        }))
+    }
+    
     @objc func toProfile() {
-        if userService?.authorization(logInText ?? "No text") != nil {
+        if checkResult == true && userService?.authorization(logInText ?? "No text") != nil {
             self.navigationController?.pushViewController(profileViewController, animated: true)
         } else {
+            self.present(alert, animated: true, completion: nil)
             print ("wrong login")
         }
     }
@@ -196,6 +211,10 @@ extension LogInViewController: UITextFieldDelegate {
             logInText = textField.text
             profileViewController.user = userService?.authorization(logInText ?? "No text")
         }
+        if textField.tag == 1 {
+            passwordText = textField.text
+        }
+        checkResult = loginDelegate?.check(logInText ?? "No text", passwordText ?? "No text")
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
