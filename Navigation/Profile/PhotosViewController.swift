@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import iOSIntPackage
 
 class PhotosViewController: UIViewController {
     
@@ -33,11 +34,14 @@ class PhotosViewController: UIViewController {
     }()
     
     private var photosNames = PhotosNames()
+    private let imagePublisherFacade = ImagePublisherFacade()
+    private var allImages: [UIImage] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(collectionView)
         setupConstraints()
+        publisher()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -50,6 +54,10 @@ class PhotosViewController: UIViewController {
         self.navigationItem.title = "Photo Gallary"
     }
     
+    deinit {
+        imagePublisherFacade.removeSubscription(for: self)
+    }
+    
     private func setupConstraints() {
        
         NSLayoutConstraint.activate([
@@ -59,12 +67,24 @@ class PhotosViewController: UIViewController {
             collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
     }
+    
+    private func publisher() {
+        imagePublisherFacade.subscribe(self)
+        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 12)
+    }
 }
 
-extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ImageLibrarySubscriber {
+    
+    func receive(images: [UIImage]) {
+        for image in images {
+            allImages.append(image)
+            collectionView.reloadData()
+        }
+    }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        self.photosNames.photos.count
+        allImages.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -74,7 +94,7 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
             return cell
         }
         
-        cell.setup(with: self.photosNames.photos[indexPath.row])
+        cell.photoImageView.image = allImages[indexPath.row]
         return cell
     }
     
@@ -89,3 +109,4 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
         return CGSize(width: itemWidth, height: itemWidth)
     }
 }
+
