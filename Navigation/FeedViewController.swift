@@ -84,7 +84,6 @@ class FeedViewController: UIViewController {
        stackView.addArrangedSubview(buttonFirst)
        stackView.addArrangedSubview(buttonSecond)
        
-       textField.translatesAutoresizingMaskIntoConstraints = false
        checkGuessButton.translatesAutoresizingMaskIntoConstraints = false
        
         NSLayoutConstraint.activate([

@@ -73,7 +73,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
         super.init(reuseIdentifier: reuseIdentifier)
         addView()
         setupConstraints()
-        changeStatusText()
         buttonPressed()
     }
     
@@ -125,18 +124,11 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
         ])
     }
     
-    func changeStatusText() {
-         setStatusButton.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
-     }
-    
     func buttonPressed() {
         setStatusButton.target = { [self] in
             print(statusLabel.text ?? "No text")
             statusLabel.text = statusTextField.text
+            statusText = statusTextField.text ?? "No text"
         }
-    }
-    
-    @objc func statusTextChanged(_ textField: UITextField) {
-        statusText = statusTextField.text ?? "No text"
     }
 }
