@@ -69,16 +69,10 @@ class LogInViewController: UIViewController {
         return password
     }()
     
-    private lazy var button: UIButton = {
-        let logInButton = UIButton()
-        logInButton.layer.cornerRadius = 10
-        logInButton.setTitle("Log In", for: .normal)
-        logInButton.setTitleColor(UIColor.white, for: .normal)
-        logInButton.backgroundColor = UIColor(patternImage: UIImage (named: "blue_pixel")!)
-        logInButton.translatesAutoresizingMaskIntoConstraints = false
-        logInButton.addTarget(self, action: #selector(toProfile), for: .touchUpInside)
-        return logInButton
-    }()
+    private lazy var button = CustomButton(title: "Log In",
+                                           cornerRadius: 10,
+                                           titleColor: .white,
+                                           color: UIColor(patternImage: UIImage (named: "blue_pixel")!))
     
     private let alert = UIAlertController(title: "Неверный логин или пароль", message: "",  preferredStyle: .alert)
     
@@ -102,6 +96,7 @@ class LogInViewController: UIViewController {
         addSubview()
         setupConstraints()
         setupAlert()
+        toProfile()
 #if DEBUG
         userService = TestUserService()
 #else
@@ -136,6 +131,9 @@ class LogInViewController: UIViewController {
     }
     
     func setupConstraints() {
+        
+        button.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
@@ -166,12 +164,14 @@ class LogInViewController: UIViewController {
         }))
     }
     
-    @objc func toProfile() {
-        if checkResult == true && userService?.authorization(logInText ?? "No text") != nil {
-            self.navigationController?.pushViewController(profileViewController, animated: true)
-        } else {
-            self.present(alert, animated: true, completion: nil)
-            print ("wrong login")
+    private func toProfile() {
+        button.target = { [self] in
+            if checkResult == true && userService?.authorization(logInText ?? "No text") != nil {
+                self.navigationController?.pushViewController(profileViewController, animated: true)
+            } else {
+                self.present(alert, animated: true, completion: nil)
+                print ("wrong login")
+            }
         }
     }
     
