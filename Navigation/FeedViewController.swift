@@ -59,7 +59,20 @@ class FeedViewController: UIViewController {
     private lazy var checkGuessButton = CustomButton(title: "Guess word",
                                                      cornerRadius: 10,
                                                      titleColor: .white,
-                                                     color: .systemBlue)
+                                                     color: .systemBlue,
+                                                     buttonAction: { [self] in
+        if textField.hasText {
+            let model = FeedModel().check(textField.text ?? "")
+            if model {
+                label.backgroundColor = .systemGreen
+            } else {
+                label.backgroundColor = .systemRed
+            }
+        } else {
+            label.backgroundColor = .systemGray
+            print ("TextField is empty")
+        }
+    })
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,7 +80,6 @@ class FeedViewController: UIViewController {
         view.backgroundColor = .white
         addTargets()
         setupConstraints()
-        checkWord()
     }
     
    private func addTargets() {
@@ -105,22 +117,6 @@ class FeedViewController: UIViewController {
             stackView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             stackView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
-    }
-    
-    private func checkWord() {
-        checkGuessButton.target = { [self] in
-            if textField.hasText {
-                let model = FeedModel().check(textField.text ?? "")
-                if model {
-                    label.backgroundColor = .systemGreen
-                } else {
-                    label.backgroundColor = .systemRed
-                }
-            } else {
-                label.backgroundColor = .systemGray
-                print ("TextField is empty")
-            }
-        }
     }
     
     @objc func toPostView() {

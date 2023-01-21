@@ -9,22 +9,21 @@ import UIKit
 
 final class CustomButton: UIButton {
     
+    typealias Action = () -> Void
+    
     var title: String?
     var cornerRadius: CGFloat?
     var titleColor: UIColor?
     var color: UIColor?
-    var target: (() -> Void)?
+    var buttonAction: Action?
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-    }
-    
-    convenience  init (title: String?, cornerRadius: CGFloat?, titleColor: UIColor?, color: UIColor?) {
-        self.init(type: .custom)
+    init (title: String?, cornerRadius: CGFloat?, titleColor: UIColor?, color: UIColor?, buttonAction: @escaping Action) {
+        super.init(frame: .zero)
         self.title = title
         self.cornerRadius = cornerRadius
         self.titleColor = titleColor
         self.color = color
+        self.buttonAction = buttonAction
         setup()
     }
     
@@ -41,8 +40,7 @@ final class CustomButton: UIButton {
     }
     
     @objc private func buttonTapped() {
-        
-        if let action = target {
+        if let action = buttonAction {
             action()
         } else {
             print ("No target")

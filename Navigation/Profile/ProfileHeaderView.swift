@@ -67,13 +67,17 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
     private lazy var setStatusButton = CustomButton(title: "Show status",
                                                     cornerRadius: 4,
                                                     titleColor: .white,
-                                                    color: .systemBlue)
+                                                    color: .systemBlue,
+                                                    buttonAction: { [self] in
+        print(statusLabel.text ?? "No text")
+        statusLabel.text = statusTextField.text
+        statusText = statusTextField.text ?? "No text"
+    } )
     
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         addView()
         setupConstraints()
-        buttonPressed()
     }
     
     required init?(coder: NSCoder) {
@@ -122,13 +126,5 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
             changeTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
             changeTitle.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 30),
         ])
-    }
-    
-    func buttonPressed() {
-        setStatusButton.target = { [self] in
-            print(statusLabel.text ?? "No text")
-            statusLabel.text = statusTextField.text
-            statusText = statusTextField.text ?? "No text"
-        }
     }
 }

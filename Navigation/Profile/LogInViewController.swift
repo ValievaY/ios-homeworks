@@ -72,7 +72,15 @@ class LogInViewController: UIViewController {
     private lazy var button = CustomButton(title: "Log In",
                                            cornerRadius: 10,
                                            titleColor: .white,
-                                           color: UIColor(patternImage: UIImage (named: "blue_pixel")!))
+                                           color: UIColor(patternImage: UIImage (named: "blue_pixel")!),
+                                           buttonAction: { [self] in
+        if checkResult == true && userService?.authorization(logInText ?? "No text") != nil {
+            self.navigationController?.pushViewController(profileViewController, animated: true)
+        } else {
+            self.present(alert, animated: true, completion: nil)
+            print ("wrong login")
+        }
+    })
     
     private let alert = UIAlertController(title: "Неверный логин или пароль", message: "",  preferredStyle: .alert)
     
@@ -96,7 +104,6 @@ class LogInViewController: UIViewController {
         addSubview()
         setupConstraints()
         setupAlert()
-        toProfile()
 #if DEBUG
         userService = TestUserService()
 #else
@@ -162,17 +169,6 @@ class LogInViewController: UIViewController {
             _ in
             print("OK")
         }))
-    }
-    
-    private func toProfile() {
-        button.target = { [self] in
-            if checkResult == true && userService?.authorization(logInText ?? "No text") != nil {
-                self.navigationController?.pushViewController(profileViewController, animated: true)
-            } else {
-                self.present(alert, animated: true, completion: nil)
-                print ("wrong login")
-            }
-        }
     }
     
     @objc private func didShowKeyboard(_ notification: Notification) {
