@@ -41,20 +41,6 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
         return status
     }()
     
-    private lazy var setStatusButton: UIButton = {
-        let button = UIButton()
-        button.setTitle("Show status", for: .normal)
-        button.setTitleColor(UIColor.white, for: .normal)
-        button.backgroundColor = .systemBlue
-        button.layer.cornerRadius = 4
-        button.layer.shadowOffset = CGSize (width: 4, height: 4)
-        button.layer.shadowRadius = 4
-        button.layer.shadowColor = UIColor.black.cgColor
-        button.layer.shadowOpacity = 0.7
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
-    }()
-    
     private lazy var statusTextField: UITextField = {
         let text = UITextField()
         text.backgroundColor = .white
@@ -78,12 +64,20 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
         return titleButton
     }()
     
+    private lazy var setStatusButton = CustomButton(title: "Show status",
+                                                    cornerRadius: 4,
+                                                    titleColor: .white,
+                                                    color: .systemBlue,
+                                                    buttonAction: { [self] in
+        print(statusLabel.text ?? "No text")
+        statusLabel.text = statusTextField.text
+        statusText = statusTextField.text ?? "No text"
+    } )
+    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         addView()
         setupConstraints()
-        addTargets()
-        changeStatusText()
     }
     
     required init?(coder: NSCoder) {
@@ -100,6 +94,9 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
     }
     
     func setupConstraints() {
+        
+        setStatusButton.translatesAutoresizingMaskIntoConstraints = false
+        
         NSLayoutConstraint.activate([
 
             avatarImageView.topAnchor.constraint(equalTo: changeTitle.bottomAnchor, constant: 16),
@@ -129,22 +126,5 @@ class ProfileHeaderView: UITableViewHeaderFooterView  {
             changeTitle.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: 0),
             changeTitle.bottomAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 30),
         ])
-    }
-    
-    func addTargets() {
-        setStatusButton.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
-     }
-    
-    func changeStatusText() {
-         setStatusButton.addTarget(self, action: #selector(statusTextChanged), for: .editingChanged)
-     }
-    
-    @objc func buttonPressed() {
-        print(statusLabel.text ?? "No text")
-        statusLabel.text = statusTextField.text
-    }
-    
-    @objc func statusTextChanged(_ textField: UITextField) {
-        statusText = statusTextField.text ?? "No text"
     }
 }
