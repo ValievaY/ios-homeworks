@@ -4,6 +4,8 @@ import UIKit
 
 class FeedViewController: UIViewController {
     
+    weak var coordinator: FeedCoordinatorProtocol?
+    
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.axis = .vertical
@@ -56,23 +58,29 @@ class FeedViewController: UIViewController {
         return label
     }()
     
+    private var viewModel = FeedViewModel()
+    
     private lazy var checkGuessButton = CustomButton(title: "Guess word",
                                                      cornerRadius: 10,
                                                      titleColor: .white,
                                                      color: .systemBlue,
                                                      buttonAction: { [self] in
         if textField.hasText {
-            let model = FeedModel().check(textField.text ?? "")
-            if model {
-                label.backgroundColor = .systemGreen
-            } else {
-                label.backgroundColor = .systemRed
-            }
+            viewModel.check(textField.text ?? "")
         } else {
             label.backgroundColor = .systemGray
             print ("TextField is empty")
         }
     })
+    
+    init(coordinator: FeedCoordinatorProtocol) {
+        super.init(nibName: nil, bundle: nil)
+        self.coordinator = coordinator
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -80,6 +88,13 @@ class FeedViewController: UIViewController {
         view.backgroundColor = .white
         addTargets()
         setupConstraints()
+        bindViewModel()
+    }
+    
+    private func bindViewModel() {
+        self.viewModel.wordDidEntered = { [weak self] viewModel in
+            self?.label.backgroundColor = viewModel.checkResult
+        }
     }
     
    private func addTargets() {
@@ -120,8 +135,6 @@ class FeedViewController: UIViewController {
     }
     
     @objc func toPostView() {
-        let postController = PostViewController()
-        self.navigationController?.pushViewController(postController, animated: true)
-        postController.titlePost = "New Post"
+        coordinator?.toPostView()
     }
 }

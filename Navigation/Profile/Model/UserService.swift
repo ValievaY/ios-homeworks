@@ -8,5 +8,7 @@
 import Foundation
 
 protocol UserService {
+    
+    var user: User? { get set }
     func authorization (_ login: String) -> User?
 }

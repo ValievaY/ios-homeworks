@@ -9,6 +9,8 @@ import UIKit
 
 class LogInViewController: UIViewController {
     
+    weak var coordinator: ProfileCoordinatorProtocol?
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.translatesAutoresizingMaskIntoConstraints = false
@@ -74,8 +76,8 @@ class LogInViewController: UIViewController {
                                            titleColor: .white,
                                            color: UIColor(patternImage: UIImage (named: "blue_pixel")!),
                                            buttonAction: { [self] in
-        if checkResult == true && userService?.authorization(logInText ?? "No text") != nil {
-            self.navigationController?.pushViewController(profileViewController, animated: true)
+        if checkResult == true && coordinator?.userProfile(logInText ?? "No text") != nil {
+            coordinator?.toProfile()
         } else {
             self.present(alert, animated: true, completion: nil)
             print ("wrong login")
@@ -90,11 +92,16 @@ class LogInViewController: UIViewController {
     
     private let profileViewController = ProfileViewController()
     
-    private var userService: UserService?
-    
-    var loginDelegate: LoginViewControllerDelegate?
-    
     private var checkResult: Bool?
+    
+    init(coordinator: ProfileCoordinatorProtocol) {
+        super.init(nibName: nil, bundle: nil)
+        self.coordinator = coordinator
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,11 +111,7 @@ class LogInViewController: UIViewController {
         addSubview()
         setupConstraints()
         setupAlert()
-#if DEBUG
-        userService = TestUserService()
-#else
-        userService = CurrentUserService()
-#endif
+        coordinator?.debugReales()
     }
     
     private func setupGestures() {
@@ -205,12 +208,12 @@ extension LogInViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.tag == 0 {
             logInText = textField.text
-            profileViewController.user = userService?.authorization(logInText ?? "No text")
+            coordinator?.userProfile(logInText ?? "No text")
         }
         if textField.tag == 1 {
             passwordText = textField.text
         }
-        checkResult = loginDelegate?.check(logInText ?? "No text", passwordText ?? "No text")
+        checkResult = coordinator?.check(logInText ?? "No text", passwordText ?? "No text")
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
