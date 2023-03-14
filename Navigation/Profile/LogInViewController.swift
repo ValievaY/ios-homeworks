@@ -69,16 +69,30 @@ class LogInViewController: UIViewController {
         return password
     }()
     
+    private lazy var activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
+    
     private lazy var button = CustomButton(title: "Log In",
                                            cornerRadius: 10,
                                            titleColor: .white,
                                            color: UIColor(patternImage: UIImage (named: "blue_pixel")!),
                                            buttonAction: { [self] in
-        if checkResult == true && userService?.authorization(logInText ?? "No text") != nil {
+        if loginDelegate?.check(logInText ?? "No text", passwordText ?? "No text") == true && userService?.authorization(logInText ?? "No text") != nil {
             self.navigationController?.pushViewController(profileViewController, animated: true)
         } else {
             self.present(alert, animated: true, completion: nil)
             print ("wrong login")
+        }
+    })
+    
+    private lazy var passwordGuessingButton = CustomButton(title: "Подобрать пароль", cornerRadius: 10, titleColor: .systemGray, color: .systemGray5, buttonAction: {
+        self.activityIndicator.startAnimating()
+        DispatchQueue.global().async {
+            self.passwordText = BruteForce().bruteForce(passwordToUnlock: "1234")
+            DispatchQueue.main.async { [self] in
+                password.text = passwordText
+                password.isSecureTextEntry = false
+                activityIndicator.stopAnimating()
+            }
         }
     })
     
@@ -135,11 +149,15 @@ class LogInViewController: UIViewController {
         scrollView.addSubview(logoImage)
         scrollView.addSubview(stackView)
         scrollView.addSubview(button)
+        scrollView.addSubview(passwordGuessingButton)
+        scrollView.addSubview(activityIndicator)
     }
     
     func setupConstraints() {
         
         button.translatesAutoresizingMaskIntoConstraints = false
+        passwordGuessingButton.translatesAutoresizingMaskIntoConstraints = false
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
             scrollView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -157,7 +175,15 @@ class LogInViewController: UIViewController {
              stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
              stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            button.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
+            activityIndicator.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
+            activityIndicator.centerYAnchor.constraint(equalTo: stackView.centerYAnchor,constant: 25),
+            
+            passwordGuessingButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
+            passwordGuessingButton.heightAnchor.constraint(equalToConstant: 50),
+            passwordGuessingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            passwordGuessingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            button.topAnchor.constraint(equalTo: passwordGuessingButton.bottomAnchor, constant: 16),
             button.heightAnchor.constraint(equalToConstant: 50),
             button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
@@ -210,7 +236,6 @@ extension LogInViewController: UITextFieldDelegate {
         if textField.tag == 1 {
             passwordText = textField.text
         }
-        checkResult = loginDelegate?.check(logInText ?? "No text", passwordText ?? "No text")
     }
     
     func textFieldDidChangeSelection(_ textField: UITextField) {
