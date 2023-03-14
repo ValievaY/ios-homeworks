@@ -34,14 +34,14 @@ class PhotosViewController: UIViewController {
     }()
     
     private var photosNames = PhotosNames()
-    private let imagePublisherFacade = ImagePublisherFacade()
     private var allImages: [UIImage] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(collectionView)
         setupConstraints()
-        publisher()
+        addImage()
+        applyFilter()
     }
     
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -54,10 +54,6 @@ class PhotosViewController: UIViewController {
         self.navigationItem.title = "Photo Gallary"
     }
     
-    deinit {
-        imagePublisherFacade.removeSubscription(for: self)
-    }
-    
     private func setupConstraints() {
        
         NSLayoutConstraint.activate([
@@ -68,20 +64,30 @@ class PhotosViewController: UIViewController {
         ])
     }
     
-    private func publisher() {
-        imagePublisherFacade.subscribe(self)
-        imagePublisherFacade.addImagesWithTimer(time: 0.5, repeat: 12)
+    func addImage() {
+        for name in photosNames.photos {
+            allImages.append(UIImage(named: name) ?? .add)
+        }
+    }
+    
+    func applyFilter() {
+        
+        let start = CFAbsoluteTimeGetCurrent()
+        
+        ImageProcessor().processImagesOnThread(sourceImages: allImages, filter: .fade, qos: .userInteractive, completion: { imagesWithFilter in
+            for (index,item) in imagesWithFilter.enumerated() {
+                self.allImages[index] = UIImage(cgImage: item!)
+            }
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+                let diff = CFAbsoluteTimeGetCurrent() - start
+                print("\(diff) seconds")
+            }
+        })
     }
 }
 
-extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, ImageLibrarySubscriber {
-    
-    func receive(images: [UIImage]) {
-        for image in images {
-            allImages.append(image)
-            collectionView.reloadData()
-        }
-    }
+extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         allImages.count
@@ -93,7 +99,6 @@ extension PhotosViewController: UICollectionViewDataSource, UICollectionViewDele
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "DefaultCell", for: indexPath)
             return cell
         }
-        
         cell.photoImageView.image = allImages[indexPath.row]
         return cell
     }
