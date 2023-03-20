@@ -88,6 +88,9 @@ class PhotosTableViewCell: UITableViewCell {
         ])
     }
     
+    @objc func reloadCollection(timer: Timer) {
+        collectionPhotosView.reloadData()
+    }
 }
 
 extension PhotosTableViewCell: UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -104,11 +107,12 @@ extension PhotosTableViewCell: UICollectionViewDataSource, UICollectionViewDeleg
     }
         cell.layer.cornerRadius = 6
         cell.clipsToBounds = true
-        cell.setup(with: photosNames.photos[indexPath.row])
+        
+        cell.timer = Timer.scheduledTimer(timeInterval: 3.0, target: self, selector: #selector (reloadCollection), userInfo: photosNames.photos.randomElement(), repeats: true)
+        cell.timer?.tolerance = 0.5
+        cell.setup(with: cell.timer?.userInfo as! String)
         return cell
     }
-    
-    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
 

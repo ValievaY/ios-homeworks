@@ -15,6 +15,8 @@ class ProfileCollectionView: UICollectionViewCell {
         return imageView
     }()
     
+    var timer: Timer?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.setupView()
@@ -30,6 +32,12 @@ class ProfileCollectionView: UICollectionViewCell {
 
         let size = super.systemLayoutSizeFitting(targetSize, withHorizontalFittingPriority: .required, verticalFittingPriority: .fittingSizeLevel)
         return size
+    }
+    
+    override func prepareForReuse() {
+        photoImageView.image = nil
+        timer?.invalidate()
+        timer = nil
     }
     
     func setup(with text: String) {
