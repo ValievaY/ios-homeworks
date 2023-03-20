@@ -6,17 +6,9 @@
 //
 
 import UIKit
+import StorageService
 
 class CustomTableViewCell: UITableViewCell {
-    
-    struct ViewPost {
-        
-        var author: String
-        var description: String
-        var image: UIImage?
-        var likes: Int
-        var views: Int
-    }
     
     private lazy var authorText: UITextView = {
         let authorText = UITextView()
@@ -87,10 +79,10 @@ class CustomTableViewCell: UITableViewCell {
         postImage.image = nil
     }
     
-    func setup(with viewPost: ViewPost) {
+    func setup(with viewPost: Post) {
         authorText.text = viewPost.author
-        descriptionText.text = viewPost.description
-        postImage.image = viewPost.image
+        descriptionText.text = viewPost.descriptionText
+        postImage.image = UIImage(named: "\(viewPost.image)")
         likesLabel.text = "Likes: \(viewPost.likes)"
         viewLabel.text = "Views: \(viewPost.views)"
     }
