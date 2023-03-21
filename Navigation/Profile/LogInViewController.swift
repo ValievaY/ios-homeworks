@@ -76,11 +76,19 @@ class LogInViewController: UIViewController {
                                            titleColor: .white,
                                            color: UIColor(patternImage: UIImage (named: "blue_pixel")!),
                                            buttonAction: { [self] in
-        if loginDelegate?.check(logInText ?? "No text", passwordText ?? "No text") == true && userService?.authorization(logInText ?? "No text") != nil {
-            self.navigationController?.pushViewController(profileViewController, animated: true)
-        } else {
-            self.present(alert, animated: true, completion: nil)
-            print ("wrong login")
+        guard !logIn.text!.isEmpty && !password.text!.isEmpty else {
+            preconditionFailure("Must have a username and password to login")
+        }
+        
+        authorisationCheck()
+        
+        loadUser { result in
+            switch result {
+            case.success(let user):
+                profileViewController.user = user
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
     })
     
@@ -96,7 +104,7 @@ class LogInViewController: UIViewController {
         }
     })
     
-    private let alert = UIAlertController(title: "Неверный логин или пароль", message: "",  preferredStyle: .alert)
+    private let alert = UIAlertController(title: "", message: "",  preferredStyle: .alert)
     
     private var logInText: String?
     
@@ -197,6 +205,38 @@ class LogInViewController: UIViewController {
         }))
     }
     
+    private func isErrorAvailable() throws {
+   
+        if loginDelegate?.check(logInText ?? "No text", passwordText ?? "No text") == true {
+            self.navigationController?.pushViewController(profileViewController, animated: true)
+        } else {
+            throw LoginError.invalidAuthorisation
+        }
+    }
+    
+    private func authorisationCheck() {
+        do {
+            try isErrorAvailable()
+        }
+        catch LoginError.invalidAuthorisation {
+            alert.title = LoginError.invalidAuthorisation.errorDescription
+            self.present(alert, animated: true, completion: nil)
+            print(LoginError.invalidAuthorisation.errorDescription)
+        }
+        catch {
+            print (error)
+        }
+    }
+    
+    private func loadUser(completion: (Result <User, Error>) -> Void) {
+        let user = userService?.authorization(logInText ?? "No text")
+        guard user != nil else {
+            completion(.failure(LoginError.notFound))
+            return
+        }
+        completion(.success(user!))
+    }
+    
     @objc private func didShowKeyboard(_ notification: Notification) {
         if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
             let keyboardRectangle = keyboardFrame.cgRectValue
@@ -231,7 +271,6 @@ extension LogInViewController: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         if textField.tag == 0 {
             logInText = textField.text
-            profileViewController.user = userService?.authorization(logInText ?? "No text")
         }
         if textField.tag == 1 {
             passwordText = textField.text
