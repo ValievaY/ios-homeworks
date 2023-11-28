@@ -18,6 +18,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window.makeKeyAndVisible()
         self.window = window
         
+        let appConfiguration = AppConfiguration.allCases.randomElement()
+        print (appConfiguration!)
+        NetworkService.request(for: appConfiguration!)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
