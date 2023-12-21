@@ -15,21 +15,70 @@ class InfoViewController: UIViewController {
         return button
     }()
     
+    private let labelUser: UILabel = {
+        let labelUser = UILabel()
+        labelUser.translatesAutoresizingMaskIntoConstraints = false
+        return labelUser
+    }()
+    
+    private let labelPlanet: UILabel = {
+        let labelPlanet = UILabel()
+        labelPlanet.layer.cornerRadius = 25
+        labelPlanet.clipsToBounds = true
+        labelPlanet.font = UIFont.systemFont(ofSize: 14, weight: .regular)
+        labelPlanet.textColor = .systemBlue
+        labelPlanet.textAlignment = .center
+        labelPlanet.numberOfLines = 3
+        labelPlanet.backgroundColor = .systemGray6
+        labelPlanet.translatesAutoresizingMaskIntoConstraints = false
+        return labelPlanet
+    }()
+    
+    let userNetwork = UserNetwork()
+    let planetNetwork = PlanetNetwork()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
         constraints()
         setupAlert()
         addAlert()
+        userNetwork.request { [weak self] title in
+            DispatchQueue.main.async {
+                self?.labelUser.text = title
+            }
+        }
+        
+        planetNetwork.request { [weak self] result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let planet):
+                    self?.labelPlanet.text = "Период оборота планеты Татуин: " + planet.orbitalPeriod
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
     }
     
     func constraints() {
         
         view.addSubview(button)
+        view.addSubview(labelUser)
+        view.addSubview(labelPlanet)
         
         NSLayoutConstraint.activate([
+            labelUser.bottomAnchor.constraint(equalTo: button.topAnchor, constant: -20),
+            labelUser.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            labelUser.heightAnchor.constraint(equalToConstant: 20),
+            
             button.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            button.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            button.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            
+            labelPlanet.topAnchor.constraint(equalTo: button.bottomAnchor, constant: 20),
+            labelPlanet.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            labelPlanet.heightAnchor.constraint(equalToConstant: 100),
+            labelPlanet.widthAnchor.constraint(equalToConstant: 200)
         ])
     }
     

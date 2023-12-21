@@ -31,8 +31,11 @@
 		553A87682AFEBC200055C494 /* AppConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 553A87672AFEBC200055C494 /* AppConfiguration.swift */; };
 		554D61A128BB53BF0006D0BE /* ProfileHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 554D61A028BB53BF0006D0BE /* ProfileHeaderView.swift */; };
 		555BC6CF28D9A4040037CA63 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555BC6CE28D9A4040037CA63 /* LogInViewController.swift */; };
+		555D35FB2B28C1A800D2901F /* UserNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 555D35FA2B28C1A800D2901F /* UserNetwork.swift */; };
 		557A222429C0798E0027FFCA /* BruteForce.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557A222329C0798E0027FFCA /* BruteForce.swift */; };
 		557A222829C2D5F90027FFCA /* InfoPostModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 557A222729C2D5F90027FFCA /* InfoPostModel.swift */; };
+		55DDB2DA2B29BDA80038BF46 /* PlanetModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DDB2D92B29BDA80038BF46 /* PlanetModel.swift */; };
+		55DDB2DC2B29C1450038BF46 /* PlanetNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DDB2DB2B29C1450038BF46 /* PlanetNetwork.swift */; };
 		55EC75F029C86D7900F26EC3 /* LoginError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EC75EF29C86D7900F26EC3 /* LoginError.swift */; };
 		55EEA26B297752CA0024E2AE /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EEA26A297752CA0024E2AE /* CustomButton.swift */; };
 		55EEA26D297859F40024E2AE /* FeedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55EEA26C297859F30024E2AE /* FeedModel.swift */; };
@@ -93,8 +96,11 @@
 		553A87672AFEBC200055C494 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
 		554D61A028BB53BF0006D0BE /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		555BC6CE28D9A4040037CA63 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		555D35FA2B28C1A800D2901F /* UserNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNetwork.swift; sourceTree = "<group>"; };
 		557A222329C0798E0027FFCA /* BruteForce.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BruteForce.swift; sourceTree = "<group>"; };
 		557A222729C2D5F90027FFCA /* InfoPostModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPostModel.swift; sourceTree = "<group>"; };
+		55DDB2D92B29BDA80038BF46 /* PlanetModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetModel.swift; sourceTree = "<group>"; };
+		55DDB2DB2B29C1450038BF46 /* PlanetNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanetNetwork.swift; sourceTree = "<group>"; };
 		55EC75EF29C86D7900F26EC3 /* LoginError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginError.swift; sourceTree = "<group>"; };
 		55EEA26A297752CA0024E2AE /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		55EEA26C297859F30024E2AE /* FeedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedModel.swift; sourceTree = "<group>"; };
@@ -202,6 +208,9 @@
 				55FE6A9B28B7BD0400991F30 /* InfoViewController.swift */,
 				553A87652AFEA4600055C494 /* NetworkService.swift */,
 				553A87672AFEBC200055C494 /* AppConfiguration.swift */,
+				555D35FA2B28C1A800D2901F /* UserNetwork.swift */,
+				55DDB2D92B29BDA80038BF46 /* PlanetModel.swift */,
+				55DDB2DB2B29C1450038BF46 /* PlanetNetwork.swift */,
 				55FE6A8428B38B7C00991F30 /* Assets.xcassets */,
 				55FE6A8928B38B7C00991F30 /* Info.plist */,
 			);
@@ -336,10 +345,12 @@
 			files = (
 				55FE6A9628B5734D00991F30 /* PostViewController.swift in Sources */,
 				551FDB89296C284800581B08 /* Checker.swift in Sources */,
+				55DDB2DA2B29BDA80038BF46 /* PlanetModel.swift in Sources */,
 				55FE6A8028B38B7700991F30 /* ViewController.swift in Sources */,
 				555BC6CF28D9A4040037CA63 /* LogInViewController.swift in Sources */,
 				55EEA26B297752CA0024E2AE /* CustomButton.swift in Sources */,
 				55FE6A7C28B38B7700991F30 /* AppDelegate.swift in Sources */,
+				555D35FB2B28C1A800D2901F /* UserNetwork.swift in Sources */,
 				551FDB812958736300581B08 /* User.swift in Sources */,
 				55EC75F029C86D7900F26EC3 /* LoginError.swift in Sources */,
 				55FE6A9C28B7BD0400991F30 /* InfoViewController.swift in Sources */,
@@ -354,6 +365,7 @@
 				551E02D328FA0422009C45C4 /* PhotosViewController.swift in Sources */,
 				551E02CF28E9AEF8009C45C4 /* PhotosTableViewCell.swift in Sources */,
 				553A87682AFEBC200055C494 /* AppConfiguration.swift in Sources */,
+				55DDB2DC2B29C1450038BF46 /* PlanetNetwork.swift in Sources */,
 				551FDB8F296DC06D00581B08 /* LoginFactory.swift in Sources */,
 				554D61A128BB53BF0006D0BE /* ProfileHeaderView.swift in Sources */,
 				551FDB8D296C2E2B00581B08 /* LoginInspector.swift in Sources */,
