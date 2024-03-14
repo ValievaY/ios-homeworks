@@ -102,6 +102,8 @@
 		551FDB90296DC11F00581B08 /* MyLoginFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyLoginFactory.swift; sourceTree = "<group>"; };
 		553A87652AFEA4600055C494 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		553A87672AFEBC200055C494 /* AppConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfiguration.swift; sourceTree = "<group>"; };
+		554B09C82BA3AF1F00D01636 /* Firebase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Firebase.h; sourceTree = "<group>"; };
+		554B09C92BA3AF1F00D01636 /* Firebase.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Firebase.docc; sourceTree = "<group>"; };
 		554D61A028BB53BF0006D0BE /* ProfileHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileHeaderView.swift; sourceTree = "<group>"; };
 		555BC6CE28D9A4040037CA63 /* LogInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		555D35FA2B28C1A800D2901F /* UserNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserNetwork.swift; sourceTree = "<group>"; };
@@ -184,6 +186,15 @@
 			path = StorageService;
 			sourceTree = "<group>";
 		};
+		554B09C72BA3AF1F00D01636 /* Firebase */ = {
+			isa = PBXGroup;
+			children = (
+				554B09C82BA3AF1F00D01636 /* Firebase.h */,
+				554B09C92BA3AF1F00D01636 /* Firebase.docc */,
+			);
+			path = Firebase;
+			sourceTree = "<group>";
+		};
 		554D619F28BB53A20006D0BE /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -219,6 +230,7 @@
 			children = (
 				55FE6A7A28B38B7700991F30 /* Navigation */,
 				551FDB45294E6A8700581B08 /* StorageService */,
+				554B09C72BA3AF1F00D01636 /* Firebase */,
 				55FE6A7928B38B7700991F30 /* Products */,
 				3343D5149F0A016F2BFA7229 /* Pods */,
 				3E623A797ED1D5BBD94614C9 /* Frameworks */,
