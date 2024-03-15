@@ -71,40 +71,21 @@ class LogInViewController: UIViewController {
     
     private lazy var activityIndicator = UIActivityIndicatorView(style: UIActivityIndicatorView.Style.medium)
     
-    private lazy var button = CustomButton(title: "Log In",
+    private lazy var button = CustomButton(title: "Войти",
                                            cornerRadius: 10,
                                            titleColor: .white,
                                            color: UIColor(patternImage: UIImage (named: "blue_pixel")!),
                                            buttonAction: { [self] in
-        guard !logIn.text!.isEmpty && !password.text!.isEmpty else {
-            preconditionFailure("Must have a username and password to login")
-        }
-        
-        authorisationCheck()
-        
-        loadUser { result in
-            switch result {
-            case.success(let user):
-                profileViewController.user = user
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
+  
+        authLogin()
     })
     
-    private lazy var passwordGuessingButton = CustomButton(title: "Подобрать пароль", cornerRadius: 10, titleColor: .systemGray, color: .systemGray5, buttonAction: {
-        self.activityIndicator.startAnimating()
-        DispatchQueue.global().async {
-            self.passwordText = BruteForce().bruteForce(passwordToUnlock: "1234")
-            DispatchQueue.main.async { [self] in
-                password.text = passwordText
-                password.isSecureTextEntry = false
-                activityIndicator.stopAnimating()
-            }
-        }
+    private lazy var signInButton = CustomButton(title: "Зарегестрироваться", cornerRadius: 10, titleColor: .systemGray, color: .systemGray5, buttonAction: { [self] in
+        
+        authSignUp()
     })
     
-    private let alert = UIAlertController(title: "", message: "",  preferredStyle: .alert)
+    private var alert = UIAlertController(title: "", message: "",  preferredStyle: .alert)
     
     private var logInText: String?
     
@@ -157,14 +138,14 @@ class LogInViewController: UIViewController {
         scrollView.addSubview(logoImage)
         scrollView.addSubview(stackView)
         scrollView.addSubview(button)
-        scrollView.addSubview(passwordGuessingButton)
+        scrollView.addSubview(signInButton)
         scrollView.addSubview(activityIndicator)
     }
     
     func setupConstraints() {
         
         button.translatesAutoresizingMaskIntoConstraints = false
-        passwordGuessingButton.translatesAutoresizingMaskIntoConstraints = false
+        signInButton.translatesAutoresizingMaskIntoConstraints = false
         activityIndicator.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -186,12 +167,12 @@ class LogInViewController: UIViewController {
             activityIndicator.centerXAnchor.constraint(equalTo: stackView.centerXAnchor),
             activityIndicator.centerYAnchor.constraint(equalTo: stackView.centerYAnchor,constant: 25),
             
-            passwordGuessingButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
-            passwordGuessingButton.heightAnchor.constraint(equalToConstant: 50),
-            passwordGuessingButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
-            passwordGuessingButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            signInButton.topAnchor.constraint(equalTo: stackView.bottomAnchor, constant: 16),
+            signInButton.heightAnchor.constraint(equalToConstant: 50),
+            signInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            signInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
             
-            button.topAnchor.constraint(equalTo: passwordGuessingButton.bottomAnchor, constant: 16),
+            button.topAnchor.constraint(equalTo: signInButton.bottomAnchor, constant: 16),
             button.heightAnchor.constraint(equalToConstant: 50),
             button.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
            button.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16)
@@ -205,26 +186,28 @@ class LogInViewController: UIViewController {
         }))
     }
     
-    private func isErrorAvailable() throws {
-   
-        if loginDelegate?.check(logInText ?? "No text", passwordText ?? "No text") == true {
-            self.navigationController?.pushViewController(profileViewController, animated: true)
-        } else {
-            throw LoginError.invalidAuthorisation
+    private func authSignUp() {
+        loginDelegate?.signUp(email: logIn.text!, password: password.text!) { [weak self] result in
+            switch result {
+            case .success(_):
+                self?.navigationController?.pushViewController(self!.profileViewController, animated: true)
+            case .failure(let error):
+                self?.alert.message = "\(error.localizedDescription)"
+                self?.present(self!.alert, animated: true)
+            }
         }
     }
     
-    private func authorisationCheck() {
-        do {
-            try isErrorAvailable()
-        }
-        catch LoginError.invalidAuthorisation {
-            alert.title = LoginError.invalidAuthorisation.errorDescription
-            self.present(alert, animated: true, completion: nil)
-            print(LoginError.invalidAuthorisation.errorDescription)
-        }
-        catch {
-            print (error)
+    private func authLogin() {
+        
+        loginDelegate?.check(logIn.text!, password.text!) { [weak self] result in
+            switch result {
+            case .success(_):
+                self?.navigationController?.pushViewController(self!.profileViewController, animated: true)
+            case .failure(let error):
+                self?.alert.message = "\(error.localizedDescription)"
+                self?.present(self!.alert, animated: true)
+            }
         }
     }
     
